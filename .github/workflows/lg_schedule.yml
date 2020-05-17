@@ -14,7 +14,7 @@ jobs:
        with:
           python-version: 3.8
 
-     - name: Runners repo
+     - name: Testing repo
        uses: actions/checkout@v2
        with:
           repository: pykancha/reddit-bots
@@ -51,7 +51,7 @@ jobs:
          python -m pip install -r requirements.txt
          curl https://raw.githubusercontent.com/codelucas/newspaper/master/download_corpora.py | python
 
-     - name: Run Script
+     - name: Run Tests
        id: run
        run: |
          cd app/link_guru

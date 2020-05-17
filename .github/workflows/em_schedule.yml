@@ -22,7 +22,7 @@ jobs:
           refs: master
           path: personal
  
-     - name: Runners repo
+     - name: Testing repo
        uses: actions/checkout@v2
        with:
           repository: pykancha/reddit-bots
@@ -54,7 +54,7 @@ jobs:
          python -m pip install -U pip setuptools
          python -m pip install -r requirements.txt
 
-     - name: Run Script
+     - name: Run Tests
        id: run
        run: |
          cd app/emoticon_bot
