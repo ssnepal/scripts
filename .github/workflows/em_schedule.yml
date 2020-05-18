@@ -61,10 +61,7 @@ jobs:
          source ../../personal/credentials/bots/.env 
          export DATA='../../replied_data/emoticon_bot/'
          cp $DATA/replied_to.json .
-
-         _now=$(date +"%m_%d_%Y_%I_%M_%S_%:::z")
-         python emoticonbot.py > "news_$_now.log"
-
+         python emoticonbot.py
          cp replied_to.json $DATA/
          cp *.log $DATA/
 
