@@ -1,0 +1,83 @@
+name: emrun
+
+on:
+  schedule:
+    - cron:  '*/45 * * * *'
+
+jobs:
+   Run:
+    runs-on: ubuntu-latest
+
+    steps:
+     - name: Set up Python 3.8
+       uses: actions/setup-python@v2
+       with:
+          python-version: 3.8
+
+     - name: Credentials repo
+       uses: actions/checkout@v2
+       with:
+          repository: hemanta212/personal
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          refs: master
+          path: personal
+ 
+     - name: Testing repo
+       uses: actions/checkout@v2
+       with:
+          repository: pykancha/reddit-bots
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          refs: master
+          path: app
+      
+     - name: Data repo
+       uses: actions/checkout@v2
+       with:
+          repository: pykancha/temp
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          refs: master
+          path: replied_data
+
+     - name: Fix branches
+       run: |
+         cd replied_data/
+         git fetch && git checkout origin/emoticon
+         git checkout -b emoticon && git pull origin emoticon
+
+         cd ../app/
+         git fetch && git checkout origin/test
+         git checkout -b test && git pull origin test
+
+     - name: Install Dependencies
+       run: |
+         cd app/emoticon_bot/
+         python -m pip install -U pip setuptools
+         python -m pip install -r requirements.txt
+
+     - name: Run Tests
+       id: run
+       run: |
+         cd app/emoticon_bot
+         source ../../personal/credentials/bots/.env 
+         export DATA='../../replied_data/emoticon_bot/'
+         cp $DATA/replied_to.json .
+         python emoticonbot.py
+         cp replied_to.json $DATA/
+         cp *.log $DATA/
+
+     - name: Commit data files
+       run: |
+         cd replied_data/emoticon_bot/
+         git config --local user.email "action@github.com"
+         git config --local user.name "GitHub Action"
+         git pull origin emoticon
+         git add .
+         git commit -m "Updates replied ids"
+
+     - name: Push data changes
+       uses: ad-m/github-push-action@master
+       with:
+         github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
+         directory: replied_data
+         branch: emoticon
+         repository: pykancha/temp
