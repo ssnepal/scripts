@@ -19,7 +19,7 @@ jobs:
        with:
           repository: hemanta212/personal
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          refs: master
+          ref: master
           path: personal
  
      - name: Testing repo
@@ -27,26 +27,16 @@ jobs:
        with:
           repository: pykancha/reddit-bots
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          refs: master
+          ref: test
           path: app
-      
+
      - name: Data repo
        uses: actions/checkout@v2
        with:
           repository: pykancha/temp
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          refs: master
+          refs: emoticon
           path: replied_data
-
-     - name: Fix branches
-       run: |
-         cd replied_data/
-         git fetch && git checkout origin/emoticon
-         git checkout -b emoticon && git pull origin emoticon
-
-         cd ../app/
-         git fetch && git checkout origin/test
-         git checkout -b test && git pull origin test
 
      - name: Install Dependencies
        run: |

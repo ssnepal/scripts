@@ -1,0 +1,80 @@
+name: parewa
+
+on:
+  push:
+  schedule:
+    - cron:  '*/15 * * * *'
+
+jobs:
+   Run:
+    runs-on: ubuntu-latest
+
+    steps:
+     - name: Set up Python 3.8
+       uses: actions/setup-python@v2
+       with:
+          python-version: 3.8
+
+     - name: Testing repo
+       uses: actions/checkout@v2
+       with:
+          repository: hemanta212/news_api
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          ref: test
+          path: work
+
+     - uses: actions/cache@v2
+       with:
+         path: ~/.cache/pip
+         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+         restore-keys: |
+           ${{ runner.os }}-pip-
+
+     - name: Data repo
+       uses: actions/checkout@v2
+       with:
+          repository: ssn212/ssn212.github.io
+          ref: master
+          path: static_site
+
+     - name: Fix branches
+       run: |
+         cd work/
+         cp -r ../static_site .
+
+     - name: Install Dependencies
+       run: |
+         cd work/
+         python -m pip install -U pip setuptools
+         python -m pip install -r requirements.txt
+         curl -sSL https://raw.githubusercontent.com/pykancha/newspaper3k_wrapper/master/download_corpora.py | python
+
+     - name: Run Tests
+       id: run
+       run: |
+          cd work/
+          python ./app.py &
+          while ! nc -z localhost 5000; do sleep 0.1; done; # Wait for server to start
+          wget --mirror localhost:5000
+          kill %1 # Kill the python server
+          mv localhost:5000/ build
+          python ./update_top_index.py
+          mv build/top build/top_test ../static_site/
+          mv build/news/* ../static_site/news/
+
+
+     - name: Testing repo
+       uses: actions/checkout@v2
+       with:
+          repository: ssn212/ssn212.github.io
+          token: ${{ secrets.SSN_ACCESS_TOKEN }}
+
+     - name: Deploy
+       uses: JamesIves/github-pages-deploy-action@3.5.9
+       with:
+         GIT_CONFIG_NAME: ssn212
+         GIT_CONFIG_EMAIL: smartstudionepali@gmail.com
+         REPOSITORY_NAME: ssn212/ssn212.github.io
+         ACCESS_TOKEN: ${{ secrets.SSN_ACCESS_TOKEN }}
+         BRANCH: master
+         FOLDER: static_site
