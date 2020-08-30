@@ -55,10 +55,9 @@ jobs:
           cd work/
           python ./app.py &
           while ! nc -z localhost 5000; do sleep 0.1; done; # Wait for server to start
-          mkdir build
           wget --mirror localhost:5000
           kill %1 # Kill the python server
-          mv localhost:5000 build
+          mv localhost:5000/ build
           python ./update_top_index.py
           mv build/top build/top_test ../static_site/
           mv build/news/* ../static_site/news/
