@@ -37,7 +37,7 @@ jobs:
           ref: master
           path: static_site
 
-     - name: Fix branches
+     - name: copy static site
        run: |
          cd work/
          cp -r ../static_site .
@@ -62,19 +62,19 @@ jobs:
           mv build/top build/top_test ../static_site/
           mv build/news/* ../static_site/news/
 
+     - name: Commit data files
+       run: |
+         cd static_site/
+         git config --local user.email "action@github.com"
+         git config --local user.name "GitHub Action"
+         git pull origin master
+         git add .
+         git commit -m "Updates news data"
 
-     - name: Testing repo
-       uses: actions/checkout@v2
+     - name: Push data changes
+       uses: ad-m/github-push-action@master
        with:
-          repository: ssn212/ssn212.github.io
-          token: ${{ secrets.SSN_ACCESS_TOKEN }}
-
-     - name: Deploy
-       uses: JamesIves/github-pages-deploy-action@3.5.9
-       with:
-         GIT_CONFIG_NAME: ssn212
-         GIT_CONFIG_EMAIL: smartstudionepali@gmail.com
-         REPOSITORY_NAME: ssn212/ssn212.github.io
-         ACCESS_TOKEN: ${{ secrets.SSN_ACCESS_TOKEN }}
-         BRANCH: master
-         FOLDER: static_site
+         github_token: ${{ secrets.SSN_ACCESS_TOKEN }}
+         directory: static_site
+         branch: master
+         repository: ssn212/ssn212.github.io
