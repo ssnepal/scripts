@@ -23,13 +23,6 @@ jobs:
           ref: test
           path: work
 
-     - uses: actions/cache@v2
-       with:
-         path: ~/.cache/pip
-         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-         restore-keys: |
-           ${{ runner.os }}-pip-
-
      - name: Data repo
        uses: actions/checkout@v2
        with:
@@ -67,7 +60,6 @@ jobs:
          cd static_site/
          git config --local user.email "action@github.com"
          git config --local user.name "GitHub Action"
-         git pull origin master
          git add .
          git commit -m "Updates news data"
 
