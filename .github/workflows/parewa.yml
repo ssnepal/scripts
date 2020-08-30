@@ -20,7 +20,7 @@ jobs:
        with:
           repository: hemanta212/news_api
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          refs: test
+          ref: test
           path: work
 
      - uses: actions/cache@v2
@@ -34,7 +34,7 @@ jobs:
        uses: actions/checkout@v2
        with:
           repository: ssn212/ssn212.github.io
-          refs: master
+          ref: master
           path: static_site
 
      - name: Fix branches
