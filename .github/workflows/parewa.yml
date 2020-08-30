@@ -27,6 +27,7 @@ jobs:
        uses: actions/checkout@v2
        with:
           repository: ssn212/ssn212.github.io
+          token: ${{ secrets.SSN_ACCESS_TOKEN }}
           ref: master
           path: static_site
 
@@ -60,6 +61,7 @@ jobs:
          cd static_site/
          git config --local user.email "smartstudionepali@gmail.com"
          git config --local user.name "ssn212"
+         git pull origin master
          git add .
          git commit -m "Updates news data"
 
