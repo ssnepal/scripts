@@ -58,8 +58,8 @@ jobs:
      - name: Commit data files
        run: |
          cd static_site/
-         git config --local user.email "action@github.com"
-         git config --local user.name "GitHub Action"
+         git config --local user.email "smartstudionepali@gmail.com"
+         git config --local user.name "ssn212"
          git add .
          git commit -m "Updates news data"
 
