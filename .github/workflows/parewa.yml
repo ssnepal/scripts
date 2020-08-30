@@ -69,6 +69,6 @@ jobs:
          GIT_CONFIG_NAME: ssn212
          GIT_CONFIG_EMAIL: smartstudionepali@gmail.com
          REPOSITORY_NAME: ssn212/ssn212.github.io
-         GITHUB_TOKEN: ${{ secrets.SSN_ACCESS_TOKEN }}
+         ACCESS_TOKEN: ${{ secrets.SSN_ACCESS_TOKEN }}
          BRANCH: master
          FOLDER: static_site
