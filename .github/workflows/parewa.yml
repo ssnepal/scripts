@@ -2,7 +2,6 @@ name: parewa
 
 on:
   push:
-
   schedule:
     - cron:  '*/15 * * * *'
 
@@ -21,7 +20,7 @@ jobs:
        with:
           repository: hemanta212/news_api
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          refs: master
+          refs: test
           path: work
 
      - uses: actions/cache@v2
