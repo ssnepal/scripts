@@ -63,6 +63,12 @@ jobs:
           mv build/news/* ../static_site/news/
 
 
+     - name: Testing repo
+       uses: actions/checkout@v2
+       with:
+          repository: ssn212/ssn212.github.io
+          token: ${{ secrets.SSN_ACCESS_TOKEN }}
+
      - name: Deploy
        uses: JamesIves/github-pages-deploy-action@3.5.9
        with:
