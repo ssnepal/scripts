@@ -71,4 +71,5 @@ jobs:
          github_token: ${{ secrets.SSN_ACCESS_TOKEN }}
          directory: static_site
          branch: master
+         force: true
          repository: ssn212/ssn212.github.io
