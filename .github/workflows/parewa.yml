@@ -3,7 +3,7 @@ name: parewa
 on:
   push:
   schedule:
-    - cron:  '* */6 * * *'
+    - cron:  '1 */6 * * *'
 
 jobs:
    Run:
