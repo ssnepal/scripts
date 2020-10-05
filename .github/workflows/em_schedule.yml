@@ -1,8 +1,8 @@
 name: emrun
 
 on:
-  schedule:
-    - cron:  '*/45 * * * *'
+  #schedule:
+    #- cron:  '*/45 * * * *'
 
 jobs:
    Run:
