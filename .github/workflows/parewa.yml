@@ -3,7 +3,7 @@ name: parewa
 on:
   push:
   schedule:
-   # - cron:  '1 */6 * * *'
+    - cron:  '1 */6 * * *'
 
 jobs:
    Run:
@@ -36,23 +36,28 @@ jobs:
          cd work/
          cp -r ../static_site .
 
-     - name: Install Dependencies
+     - name: Poetry installation
+       uses: dschep/install-poetry-action@v1.2
+       with:
+         version: 1.0.5
+
+     - name: Dependencies installation
        run: |
          cd work/
-         python -m pip install -U pip setuptools
-         python -m pip install -r requirements.txt
-         curl -sSL https://raw.githubusercontent.com/pykancha/newspaper3k_wrapper/master/download_corpora.py | python
+         poetry install
+         curl -sSL https://raw.githubusercontent.com/pykancha/newspaper3k_wrapper/master/download_corpora.p -o corpora.py
+         poetry run python corpora.py
 
      - name: Run Tests
        id: run
        run: |
           cd work/
-          python ./app.py &
+          poetry run python ./app.py &
           while ! nc -z localhost 5000; do sleep 0.1; done; # Wait for server to start
           wget --mirror localhost:5000
           kill %1 # Kill the python server
           mv localhost:5000/ build
-          python ./update_top_index.py
+          poetry run python ./update_top_index.py
           mv build/top build/top_test ../static_site/
           mv build/news/* ../static_site/news/
 
