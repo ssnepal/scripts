@@ -39,13 +39,19 @@ jobs:
      - name: Poetry installation
        uses: dschep/install-poetry-action@v1.2
        with:
-         version: 1.0.5
+         version: 1.1.4
 
      - name: Dependencies installation
        run: |
          cd work/
+         poetry run python -m pip install -U pip wheel setuptools
+         git clone https://github.com/pykancha/newspaper3k_wrapper
+         cd newspaper3k_wrapper
+         poetry run python -m pip install -r requirements.txt
+         poetry run python setup.py install
+         cd ../
          poetry install
-         curl -sSL https://raw.githubusercontent.com/pykancha/newspaper3k_wrapper/master/download_corpora.p -o corpora.py
+         curl -sSL https://raw.githubusercontent.com/pykancha/newspaper3k_wrapper/master/download_corpora.py -o corpora.py
          poetry run python corpora.py
 
      - name: Run Tests
