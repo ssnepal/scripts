@@ -37,9 +37,7 @@ jobs:
          cp -r ../static_site .
 
      - name: Poetry installation
-       uses: dschep/install-poetry-action@v1.2
-       with:
-         version: 1.1.4
+       uses: snok/install-poetry@v1.1.1
 
      - name: Dependencies installation
        run: |
