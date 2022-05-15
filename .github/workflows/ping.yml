@@ -1,0 +1,22 @@
+name: ping
+
+on:
+  push:
+  schedule:
+    - cron:  '*/30 * * * *'
+
+jobs:
+   Run:
+    runs-on: ubuntu-latest
+
+    steps:
+     - name: ping replit election bot
+       run: |
+         wget https://reddit-bots.hemanta212.repl.co/
+         ping -c 10 https://reddit-bots.hemanta212.repl.co/
+
+     - name: ping replit nsfw bot
+       run: |
+         wget https://nsfw-discord-bot.hemanta212.repl.co
+         ping https://nsfw-discord-bot.hemanta212.repl.co
+
