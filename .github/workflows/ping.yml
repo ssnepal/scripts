@@ -17,6 +17,6 @@ jobs:
 
      - name: ping replit nsfw bot
        run: |
-         wget https://nsfw-discord-bot.hemanta212.repl.co -O discord.html
+         wget https://discord-election-bot.hemanta212.repl.co -O discord.html
          cat discord.html
 
