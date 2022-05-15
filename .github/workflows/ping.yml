@@ -13,10 +13,8 @@ jobs:
      - name: ping replit election bot
        run: |
          wget https://reddit-bots.hemanta212.repl.co/
-         ping -c 10 reddit-bots.hemanta212.repl.co
 
      - name: ping replit nsfw bot
        run: |
          wget https://nsfw-discord-bot.hemanta212.repl.co
-         ping nsfw-discord-bot.hemanta212.repl.co
 
