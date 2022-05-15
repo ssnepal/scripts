@@ -12,9 +12,11 @@ jobs:
     steps:
      - name: ping replit election bot
        run: |
-         wget https://reddit-bots.hemanta212.repl.co/
+         wget https://reddit-bots.hemanta212.repl.co/ -O bot.html
+         cat bot.html
 
      - name: ping replit nsfw bot
        run: |
-         wget https://nsfw-discord-bot.hemanta212.repl.co
+         wget https://nsfw-discord-bot.hemanta212.repl.co -O discord.html
+         cat discord.html
 
