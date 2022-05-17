@@ -20,3 +20,8 @@ jobs:
          wget https://discord-election-bot.hemanta212.repl.co -O discord.html
          cat discord.html
 
+     - name: ping Graph election
+       run: |
+         wget https://electionupdate.herokuapp.com -O herokuelectiongraph.html
+         cat herokuelectiongraph.html
+

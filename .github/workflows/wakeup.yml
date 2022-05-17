@@ -3,7 +3,7 @@ name: ping
 on:
   push:
   schedule:
-    - cron:  '*/30 * * * *'
+    - cron:  '*/25 * * * *'
 
 jobs:
    Run:
@@ -19,4 +19,9 @@ jobs:
        run: |
          wget https://discord-election-bot.hemanta212.repl.co -O discord.html
          cat discord.html
+
+     - name: ping Graph election
+       run: |
+         wget https://electionupdate.herokuapp.com -O herokuelectiongraph.html
+         cat herokuelectiongraph.html
 
